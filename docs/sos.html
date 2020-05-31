@@ -1,10 +1,10 @@
 <html lang='en'>
 <head>
   <title>Sanctum of Scales</title>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.min.js"></script>
   <script>if(window['d3'] === undefined ||
    window['Nyaplot'] === undefined){
-    var path = {"d3":"https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min","downloadable":"http://cdn.rawgit.com/domitry/d3-downloadable/master/d3-downloadable"};
+    var path = {"d3":"https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min","downloadable":"https://cdn.rawgit.com/domitry/d3-downloadable/master/d3-downloadable"};
 
 
 
@@ -17,7 +17,7 @@ require(['d3'], function(d3){window['d3']=d3;console.log('finished loading d3');
 
 	var script = d3.select("head")
 	    .append("script")
-	    .attr("src", "http://cdn.rawgit.com/domitry/Nyaplotjs/master/release/nyaplot.js")
+	    .attr("src", "https://cdn.rawgit.com/domitry/Nyaplotjs/master/release/nyaplot.js")
 	    .attr("async", true);
 
 	script[0][0].onload = script[0][0].onreadystatechange = function(){
