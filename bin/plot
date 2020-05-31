@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+require "mechanize"
+require "json"
+require "date"
+require "csv"
+require "nyaplot"
+
+module Death;end;
+
+module Death::Download
+  @uris =
+    { sos: "https://www.jahadeem.com/gsiv/death.php?game_code=GS3&character_name=&location_name=Sanctum+of+Scales"}
+
+  def self.agent
+    @agent ||= Mechanize.new
+  end
+
+
+  def self.fetch_deaths(area: :sos)
+    uri = @uris[area.to_sym]
+    fail "unknown area #{area}, known are: #{@uris.keys}" if uri.nil?
+    html = Nokogiri::HTML agent.get(uri).content.toutf8
+    html.css("tbody tr").map do |tr|
+      (_instance, ts, _game_ts, name, _area) = tr.css("td").map(&:text).map(&:strip)
+      [Date.parse(ts).day, name]
+    end
+  end
+end
+area = ARGV.first || :sos
+deaths = Hash[Death::Download.fetch_deaths(area: area).group_by(&:first).map do |k, v| [k, v.size] end]
+plot = Nyaplot::Plot.new
+plot.add(:line, deaths.keys, deaths.values)
+plot.x_label("day of month")
+plot.y_label("deaths")
+plot.export_html("docs/#{area}.html")
